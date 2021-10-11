@@ -7,6 +7,6 @@ const selector = (req, res) => {
     var _a;
     const type = (_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.tipo;
     const response = webhookTypes_1.webhookTypes[type] === undefined ? response_1.notFound : webhookTypes_1.webhookTypes[type];
-    return res.json(response());
+    return res.json(response(req, res));
 };
 exports.selector = selector;

@@ -6,13 +6,14 @@
     },
     "Carboidrato": {
         "arroz": 10.0,
+        "arroz integral": 12.5,
         "mandioca": 9.85,
         "batata": 13.5
     },
     "Saladas": {
-        "Alface": 2.5,
-        "Tomate": 8.0,
-        "Cenoura": 3.4,
-        "Beterraba": 4.5
+        "alface": 2.5,
+        "tomate": 8.0,
+        "cenoura": 3.4,
+        "beterraba": 4.5
     }
 }
