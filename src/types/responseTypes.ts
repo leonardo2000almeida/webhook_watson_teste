@@ -16,3 +16,16 @@ export type pedido = {
   carboidratos: string;
   salada: [string];
 };
+
+export type cepReturn = {
+  cep: string;
+  logradouro: string;
+  complemento: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+  ibge: string;
+  gia: "";
+  ddd: string;
+  siafi: string;
+};

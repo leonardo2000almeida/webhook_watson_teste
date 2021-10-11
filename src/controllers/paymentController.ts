@@ -1,8 +1,8 @@
-import { pedido, context} from "./../types/responseTypes";
+import { pedido, context, cepReturn } from "./../types/responseTypes";
 import { Request, Response } from "express";
 import mascaraMoeda from "../utils/valorMonetario";
-import produtos from "../model/produtos.json";
 import FinalizaPeidido from "../utils/finalizaPedido";
+import axios from "axios";
 
 const finalizaPedidoHelper = new FinalizaPeidido();
 
@@ -30,5 +30,20 @@ export default class PaymentController {
       },
       status: 200,
     };
+  };
+
+  consultaCep = async (req: Request, res: Response) => {
+    let cep: string = req?.body?.cep;
+    cep = cep.replace(/\-/, "");
+
+    const request_cep = await axios.get(
+      `https://viacep.com.br/ws/${cep}/json/`
+    );
+
+    const request:cepReturn = request_cep.data;
+
+    const userOptions = `${request.logradouro}, ${request.bairro}, ${request.localidade}`;
+
+    return { endereco: request, status:request_cep.status, userOptions };
   };
 }
