@@ -1,0 +1,18 @@
+{
+    "Proteinas": {
+        "carne": 45.0,
+        "frango": 18.99,
+        "peixe": 25.0
+    },
+    "Carboidrato": {
+        "arroz": 10.0,
+        "mandioca": 9.85,
+        "batata": 13.5
+    },
+    "Saladas": {
+        "Alface": 2.5,
+        "Tomate": 8.0,
+        "Cenoura": 3.4,
+        "Beterraba": 4.5
+    }
+}
