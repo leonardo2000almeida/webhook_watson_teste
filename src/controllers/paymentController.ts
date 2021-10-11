@@ -1,25 +1,26 @@
+import { pedido, context} from "./../types/responseTypes";
 import { Request, Response } from "express";
 import mascaraMoeda from "../utils/valorMonetario";
 import produtos from "../model/produtos.json";
-import { criarPedido, calculaSalada } from "../utils/finalizaPedido";
+import FinalizaPeidido from "../utils/finalizaPedido";
+
+const finalizaPedidoHelper = new FinalizaPeidido();
 
 export default class PaymentController {
   constructor() {}
 
   paymentCalc = (req: Request, res: Response) => {
-    const context = req?.body?.contexto;
+    const context: context = req?.body?.contexto;
 
-    const proteina = produtos.Proteinas[context.proteina_selecionada] || 0;
-    const carboidratos = produtos.Carboidrato[context.carboidrato_selecionado] || 0;
-
-    const salada = calculaSalada(context.salada_selecionada);
-    const totalApagar = proteina + carboidratos + salada;
-
-    let confirmaPedido = criarPedido({
-      proteina: `${context.proteina_selecionada} ${context.modo_preparo_proteina}`,
-      carboidratos: `${context.carboidrato_selecionado} ${context.modo_preparo_carboidrato}`,
+    const pedido: pedido = {
+      carboidratos: context.carboidrato_selecionado,
+      proteina: context.proteina_selecionada,
       salada: context.salada_selecionada,
-    });
+    };
+
+    const totalApagar = finalizaPedidoHelper.calculaPedido(pedido);
+
+    let confirmaPedido = finalizaPedidoHelper.criarPedido(context);
 
     return {
       response: {
