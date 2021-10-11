@@ -4,7 +4,7 @@
   "description": "A test to bia from bradesco",
   "main": "src/server.ts",
   "scripts": {
-    "start": "tsc && node src/dist/server.js",
+    "start": "node src/dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --ignore-watch node_modules src/server.ts"
   },
