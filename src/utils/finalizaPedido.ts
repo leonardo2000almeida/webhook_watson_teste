@@ -1,27 +1,54 @@
-import { pedido } from "../types/responseTypes";
+import { context, pedido } from "../types/responseTypes";
 import produto from "../model/produtos.json";
 
-export const criarPedido = (payload: pedido): string => {
-  const { carboidratos, proteina, salada} = payload;
-  let response = "";
+export default class FinalizaPedidoHelper {
+  constructor() {}
 
-  if (!proteina.includes("undefined")) response += `${proteina}, `;
-  if (!carboidratos.includes("undefined")) response += `${carboidratos}, `;
-  
-  
-  salada.map((ingrediente, index) => {
-    if(salada.length === index + 1)
-      response += `${ingrediente} `;
-    else
-      response += `${ingrediente},`;
-  })
+  criarPedido = (payload: context): string => {
+    let response = "";
 
-  return response ? response : "";
-};
+    const {
+      carboidrato_selecionado,
+      modo_preparo_carboidrato,
+      modo_preparo_proteina,
+      proteina_selecionada,
+      salada_selecionada,
+    } = payload;
 
-export const calculaSalada = (payload: [string]): number => {
-  let total = 0;
-  payload.map((salada) => total += produto.Saladas[salada]);
+    if (proteina_selecionada && modo_preparo_proteina) 
+      response += `${proteina_selecionada} ${modo_preparo_proteina}, `;
+    else if(proteina_selecionada)
+      response += `${proteina_selecionada} ,`;
 
-  return total;
-};
+    if (carboidrato_selecionado && modo_preparo_carboidrato)
+      response += `${carboidrato_selecionado} ${modo_preparo_carboidrato}, `;
+    else if(carboidrato_selecionado)
+      response += `${carboidrato_selecionado} ,`;
+
+    if (salada_selecionada)
+      salada_selecionada.map((ingrediente) => (response += `${ingrediente}, `));
+    
+    return response.substring(0, response.length - 2);
+  };
+
+  calculaPedido = (ingredientesSelecionados: pedido) => {
+    const { carboidratos, proteina, salada } = ingredientesSelecionados;
+
+    let precoSalada = 0;
+    let precoProteina = 0;
+    let precoCarboidrato = 0;
+
+    if (salada) precoSalada = this.calculaSalada(salada);
+    if (carboidratos) precoCarboidrato = produto.Carboidrato[carboidratos.toLowerCase()];
+    if (proteina) precoProteina = produto.Proteinas[proteina.toLowerCase()];
+
+    return precoSalada + precoCarboidrato + precoProteina;
+  };
+
+  calculaSalada = (payload: [string]): number => {
+    let total = 0;
+    payload.map((salada) => (total += produto.Saladas[salada.toLowerCase()]));
+
+    return total;
+  };
+}
