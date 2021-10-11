@@ -8,4 +8,5 @@ const paymentController_1 = __importDefault(require("../controllers/paymentContr
 const paymentController = new paymentController_1.default();
 exports.webhookTypes = {
     calcular_pedido: paymentController.paymentCalc,
+    consulta_cep: paymentController.consultaCep
 };

@@ -24,7 +24,7 @@ export default class PaymentController {
 
     return {
       response: {
-        total: totalApagar,
+        total: mascaraMoeda(totalApagar),
         valorParaConfirmacao: `R$ ${mascaraMoeda(totalApagar)}`,
         pedido: confirmaPedido,
       },
@@ -40,10 +40,10 @@ export default class PaymentController {
       `https://viacep.com.br/ws/${cep}/json/`
     );
 
-    const request:cepReturn = request_cep.data;
+    const request: cepReturn = request_cep.data;
 
     const userOptions = `${request.logradouro}, ${request.bairro}, ${request.localidade}`;
 
-    return { endereco: request, status:request_cep.status, userOptions };
+    return { endereco: request, status: request_cep.status, userOptions };
   };
 }
